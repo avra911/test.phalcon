@@ -4,8 +4,14 @@ use Ips\Forms\LoginForm;
 class IndexController extends ControllerBase
 {
 
-    public function indexAction()
+    public function beforeExecuteRoute($dispatcher)
     {
+        $this->flash->error('test');
+    }
+
+    public function mainAction()
+    {
+        $this->flash->error('test');
         $loginForm = new LoginForm();
         $this->view->login_form = $loginForm;
         $this->view->setVars([

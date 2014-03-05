@@ -7,6 +7,7 @@ use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Mvc\Router;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -22,6 +23,32 @@ $di->set('url', function () use ($config) {
 
     return $url;
 }, true);
+
+//Register the flash service with custom CSS classes
+$di->set('flash', function(){
+    $flash = new \Phalcon\Flash\Session(array(
+        'error' => 'alert alert-error',
+        'success' => 'alert alert-success',
+        'notice' => 'alert alert-info',
+    ));
+    return $flash;
+});
+
+$di['router'] = function() {
+
+    // Create the router
+    $router = new Router();
+    $router->add(
+        "/",
+        array(
+            "controller" => "index",
+            "action"     => "main",
+        )
+    );
+
+    return $router;
+};
+
 
 /**
  * Setting up the view component

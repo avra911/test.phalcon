@@ -2,6 +2,7 @@
 
 error_reporting(E_ALL);
 
+(new Phalcon\Debug)->listen();
 try {
 
     /**
